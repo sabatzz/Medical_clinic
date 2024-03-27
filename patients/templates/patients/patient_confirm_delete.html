@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Clinic</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+
+</head>
+<body>
+    <h1>Medical Clinic</h1>
+
+    <!-- confirm  -->
+    <div id="confirm-delete-modal" class="modal">
+        <div class="modal-content">
+            <p>Are you sure you want to remove the patient?</p>
+            <button id="confirm-delete-yes">Yes</button>
+            <button id="confirm-delete-no">No</button>
+        </div>
+    </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var confirmDeleteModal = document.getElementById('confirm-delete-modal');
+        var confirmDeleteYes = document.getElementById('confirm-delete-yes');
+        var confirmDeleteNo = document.getElementById('confirm-delete-no');
+
+        confirmDeleteYes.addEventListener('click', function() {
+            confirmDeleteModal.style.display = 'none';
+
+            var pk = '{{ patient.pk }}'; // patient id
+            var formData = new FormData();
+            formData.append('pk', pk);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', window.location.href, true);
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    //redirect to the main view
+                    window.location.href = '{% url 'patients:patient_list' %}';
+                }
+            };
+            xhr.send(formData);
+        });
+
+        confirmDeleteNo.addEventListener('click', function() {
+            //redirect to the main view
+            window.location.href = '{% url 'patients:patient_list' %}';
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Szczegóły pacjenta</title>#}
+{#</head>#}
+{#<body>#}
+{#    <h1>Szczegóły pacjenta</h1>#}
+{#    <ul>#}
+{#        <li><strong>Imię:</strong> {{ patient.first_name }}</li>#}
+{#        <li><strong>Nazwisko:</strong> {{ patient.last_name }}</li>#}
+{#        <li><strong>PESEL:</strong> {{ patient.pesel }}</li>#}
+{#        <!-- Dodajemy przycisk do edycji -->#}
+{#        <li><a href="{% url 'patients:patient_edit' patient.pk %}">Edytuj</a></li>#}
+{#        {% if address %}#}
+{#            <li><strong>Ulica:</strong> {{ address.street }}</li>#}
+{#            <li><strong>Miasto:</strong> {{ address.city }}</li>#}
+{#            <li><strong>Kod pocztowy:</strong> {{ address.zipcode }}</li>#}
+{#        {% endif %}#}
+{#    </ul>#}
+{#</body>#}
+{#</html>#}

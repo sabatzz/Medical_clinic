@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Clinic</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+
+</head>
+<body>
+    <h1>Medical Clinic</h1>
+
+    <div class="container">
+         <!-- sort and search -->
+        <div class="sorting-search-form">
+            <h2>Pacients list:</h2>
+            <form method="get">
+                <label for="sort_by">Sort by:</label>
+                <select name="sort_by" id="sort_by">
+                    <option value="first_name_asc">Name in ASC</option>
+                    <option value="first_name_desc">Name in DESC</option>
+                    <option value="last_name_asc">Surname in ASC</option>
+                    <option value="last_name_desc">Surname in DESC</option>
+                </select>
+                <button type="submit">Sort</button>
+            </form>
+            <form method="get">
+                <label for="search">Search:</label>
+                <input type="text" name="search" id="search">
+                <button type="submit">Search | Restore</button>
+            </form>
+        </div>
+
+         <!-- table/ list of patients -->
+        <div class="patient-list">
+            <table>
+                <tr>
+                    <th style="width: 30%;">Name</th>
+                    <th style="width: 20%;">Pesel</th>
+                    <th style="width: 35%;">Address</th>
+                    <th style="width: 15%;">Actions</th>
+                </tr>
+                {% for patient in patients %}
+                    <tr>
+                        <td contenteditable>{{ patient.first_name }} {{ patient.last_name }}</td>
+                        <td contenteditable>{{ patient.pesel}}</td>
+
+                        <td>
+                            {% if patient.address %}
+                                <span contenteditable>{{ patient.address.street }}</span><br>
+                                <span contenteditable>{{ patient.address.city }}, {{ patient.address.zipcode }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button onclick="savePatientData(this)">Save</button>
+                            <button onclick="deletePatient(this)">Delete</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <!-- adding patient form -->
+        <div class="form-container">
+            <form method="post">
+                {% csrf_token %}
+                <h2>Edit data:</h2>
+                <h3>Personal data:</h3>
+                {{ patient_form.as_p }}
+                <h3>Address:</h3>
+                {{ address_form.as_p }}
+                <button type="submit">Edit</button>
+            </form>
+            <hr>
+        </div>
+    </div>
+
+    <script>
+        function savePatientData(button) {
+            var row = button.parentNode.parentNode;
+            var firstName = row.cells[0].innerText.trim();
+            var lastName = row.cells[0].innerText.trim();
+            var pesel = row.cells[1].innerText.trim();
+            var street = row.cells[2].querySelector('span').innerText.trim();
+            var cityZip = row.cells[2].querySelectorAll('span')[1].innerText.trim().split(', ');
+            var city = cityZip[0];
+            var zipcode = cityZip[1];
+            // saving changes in a database
+        }
+
+        function deletePatient(button) {
+            var row = button.parentNode.parentNode;
+            // delate patients
+        }
+    </script>
+</body>
+</html>

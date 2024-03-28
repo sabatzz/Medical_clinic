@@ -8,6 +8,45 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
 
+    <style>
+    .modal {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+    }
+
+    .modal-content {
+        text-align: center;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        border: 2px solid #ccc;
+    }
+
+    #confirm-delete-yes,
+    #confirm-delete-no {
+        margin-top: 10px;
+        padding: 5px 10px;
+        border: none;
+        background-color: #4CAF50;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    #confirm-delete-yes:hover,
+    #confirm-delete-no:hover {
+        background-color: #00A36C;
+    }
+</style>
+
 </head>
 <body>
     <h1>Medical Clinic</h1>
